@@ -1444,11 +1444,15 @@ static void create_tab_app_specific(WWindow *wwin, InspectorPanel *panel, int fr
 		for (i = 0; i < wlengthof(application_attr); i++) {
 			int is_userdef, flag;
 
+			if (wapp) {
 			is_userdef = get_attr_flag(&wapp->main_window_desc->defined_user_flags, &application_attr[i].flag);
 			if (is_userdef)
 				flag = get_attr_flag(&wapp->main_window_desc->user_flags, &application_attr[i].flag);
 			else
 				flag = get_attr_flag(&wapp->main_window_desc->client_flags, &application_attr[i].flag);
+			} else {
+				flag = 0;
+			}
 
 			panel->appChk[i] = WMCreateSwitchButton(panel->appFrm);
 			WMMoveWidget(panel->appChk[i], 10, 20 * (i + 1));
